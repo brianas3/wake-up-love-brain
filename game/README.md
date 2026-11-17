@@ -97,3 +97,17 @@ python3 -m pytest -q tests        # 跑測試
 - 單一 process 的鎖：多 worker 部署會失效，需改 SQLite 或檔案鎖。
 - 來源 IP 限制不讀 `X-Forwarded-For`。介面只做網頁版，不做 LINE Bot（2026-11-09 決定）。
 - 玩家 token 遺失無法找回。
+
+## 情境小測驗
+
+首頁同意資料說明、進入遊戲後，點「小測驗」即可練習。每次從 12 題題庫抽 6 題（含 1 題正常互動），選答案及把握程度，確認後看解析。進度逐題自動儲存，重新整理後可續答；完成後可查看本次逐題解析、最近 20 次成績與歷史最佳分數。分數與遊戲清醒分數分開，不用來判定依附類型或受騙機率。
+
+題庫：`data/quiz.json`；後端：`engine/quiz.py`；前端：`static/quiz.js`；測試：`tests/test_quiz.py`。題庫只由後端讀取，作答前不傳標準答案。沿用既有 token 與刪除資料機制，不需新增套件或資料庫。
+
+## 我的成就
+
+首頁、角色選單與覆盤頁均可開啟「我的成就」。未同意／未開始的玩家可先瀏覽徽章條件；開始後會顯示自己的解鎖紀錄，可篩選全部、已解鎖與未解鎖。8 枚徽章涵蓋覆盤、精準辨識、五種角色、金錢界線、重新選擇及小測驗，條件在每張卡片中完整列出。成就由後端判定與保存，不另外要求套件。
+
+本分支接續 `feature/quiz`，包含小測驗及成就；成就獨立變更可用 `git diff feature/quiz..feature/achievements` 檢視。先合併小測驗 PR，再將成就分支同步至最新 main 後開成就 PR。不要直接覆蓋已有組員修改的專案。
+
+驗證：`python3 -m pytest -q tests`。相關檔案：`engine/achievements.py`、`static/achievements.js`、`tests/test_achievements.py`。瀏覽器人工檢查：手機窄螢幕、深淺色模式、鍵盤 Tab／Escape、完成遊戲或測驗後再開啟成就、重整後解鎖狀態保留。

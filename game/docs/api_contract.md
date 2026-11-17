@@ -189,3 +189,21 @@ message, model_text, resources:[{name,number,note}]（ai_identity 為 []）, dis
 - 前端需配合：`quota_exceeded` 請顯示「目前無法建立新玩家，請聯絡測試主持人」；`rate_limited` 顯示「嘗試太頻繁，請稍後再試」。
 
 - **教練 tone 渲染（Q67，與後端 A 對齊）**：`neutral` 與 `praise` 的文字現在相同（避免 tone 本身洩漏對方該句有沒有紅旗）。前端**必須把 `praise` 與 `neutral` 渲染成完全一樣**（同圖示、同顏色、同標題），否則 tone 就是答案。此項取代第 7 輪「neutral 用中性樣式」的建議。
+
+## 情境小測驗（feature/quiz）
+
+沿用 `X-Player-Token`、玩家鎖與寫入速率限制；先用既有同意流程建立玩家。以下均為 JSON POST，帶 `player`，未授權回 401。小測驗不呼叫 LLM，不改動遊戲清醒分數。
+
+- `/api/quiz/state`：讀取 `active`、最近 20 次 `history`、累計 `completed_count`、`best_score`。
+- `/api/quiz/start`：建立 6 題（5 題風險情境＋1 題正常對照）；已有未完成測驗則續答，不覆蓋。
+- `/api/quiz/answer`：另帶 `attempt_id`、`question_id`、`choice`（從 0 起的整數索引）、`confidence`（1–3 整數）。依順序作答，每題確認後儲存並回傳解析；同一答案重試不重複計分，更改已確認答案回 400。分數由伺服器計算，不接受客戶端分數。
+
+三個端點回傳相同狀態結構。`active.questions` 只有 `id`、`prompt`、`options`；已確認的解析位於 `active.answers`。完成後 `active` 增加 `score`、`completed_at`；之後再 start 才開始新測驗。題庫快照保存在玩家存檔，進行中的題目不受題庫更新影響。刪除玩家會一併刪除測驗資料。完整逐題解析保留於最近一次測驗，歷史僅保留時間與分數；累計次數與最佳分數不受 20 次上限影響。
+
+## 我的成就（feature/achievements）
+
+- `GET /api/achievements/catalog`：公開徽章條件，全部為未解鎖，不含任何玩家資料，也不建立玩家。
+- `POST /api/achievements {player}`：沿用 token 驗證與速率限制，回傳 `badges`、`unlocked_count`、`total`、`newly_unlocked`。每枚徽章含 `id/title/description/icon/group/progress/target/unlocked/unlocked_at`。忽略客戶端指定的分數或解鎖狀態。
+- 遊戲覆盤回應新增 `achievements`；小測驗完成時也在同一次存檔更新解鎖資料。解鎖時間只寫入一次，重新開始遊戲或測驗不清除徽章，刪除玩家時一併移除。
+- 完成覆盤需至少有一次玩家回覆，安全提示中止的局不採計。紅旗徽章依精確數量，不採四捨五入的 precision/recall；守住荷包需愛情騙子局自然結束、曾遇金錢誘導且無轉款事件。
+- `reviews[].achievement_stats` 保存必要的條件證據，讓角色局重置後仍能累積不同角色進度。舊存檔只回補仍保留的已覆盤局與既有測驗紀錄；缺乏證據的舊摘要不推測解鎖。舊紀錄回補日期為首次辨認成就的日期。

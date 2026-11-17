@@ -21,7 +21,7 @@ import unicodedata
 from datetime import datetime
 from typing import Dict, List, Optional
 
-from . import coach, safety, scoring
+from . import coach, safety, scoring, achievements
 from .llm import NPCRequest, fallback_output, generate_safe
 from .personas import STAGE_TOTAL, Persona, render
 
@@ -654,6 +654,8 @@ class Game:
             state = prof["sessions"].get(persona_id)
             if state is None:
                 raise GameError("session not started", "not_started")
+            natural_end = bool(state["ended"] and not state.get("safety")
+                               and state.get("stage") == 5 and state.get("stage5_turns", 0) >= STAGE5_TURNS)
             if not state["ended"]:
                 if not finish:
                     raise GameError("session not finished; pass finish=true to end it and see the review", "not_finished")
@@ -667,10 +669,12 @@ class Game:
                     "persona_id": persona.id, "persona_title": persona.title,
                     "awake_score": scores["awake_score"], "fooled_index": scores["fooled_index"],
                     "recall": scores["recall"], "ts": time.time(), "session_at": state["created_at"],
+                    "achievement_stats": achievements.review_evidence(state, scores, natural_end),
                 })
                 state["reviewed"] = True
+            earned = achievements.sync(prof)
             self.store.save(prof)
-            return {"scores": scores, "coach": report}
+            return {"scores": scores, "coach": report, "achievements": earned}
 
     @staticmethod
     def _enrich_items(report: dict, state: dict) -> None:

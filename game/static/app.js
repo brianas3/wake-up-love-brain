@@ -39,9 +39,7 @@ const SOS = [  // fallback，正常情況讀 /api/resources
   { number: "113", name: "113 保護專線", note: "遭受暴力、跟蹤、性侵或脅迫時" },
 ];
 const SOON = {
-  quiz: ["note", "戀愛腦小測驗", "10 題判斷你的依附類型與易被騙程度。開發中，敬請期待。"],
   club: ["users", "暈船互助會", "匿名分享、互相提醒的小社群。開發中，敬請期待。"],
-  badges: ["medal", "我的成就", "抓到紅旗、順利離開渣人，都會在這裡解鎖徽章。開發中，敬請期待。"],
 };
 
 /* ---------- NPC 頭像（純裝飾 inline SVG；未知人格退回通用人像圖示） ---------- */
@@ -710,7 +708,12 @@ function reviewClick() {
 async function review(finish) {
   try {
     const r = await api("/api/review", { player: S.player, persona: S.current, severity: severity(), ...(finish ? { finish: true } : {}) });
+    if (r.achievements && r.achievements.newly_unlocked.length) {
+      const names = r.achievements.badges.filter(b => r.achievements.newly_unlocked.includes(b.id)).map(b => b.title);
+      toast("解鎖成就：" + names.join("、"));
+    }
     const s = r.scores;
+    const newAchievements = (r.achievements && r.achievements.newly_unlocked) || [];
     const body = $("review-body");
     body.replaceChildren();
 
@@ -776,6 +779,10 @@ async function review(finish) {
       body.append(ul);
     }
     openModal("review-modal");
+    if (newAchievements.length) {
+      const names = (r.achievements.badges || []).filter(b => newAchievements.includes(b.id)).map(b => b.title);
+      toast("新成就解鎖：" + names.join("、"));
+    }
     try { render(await api("/api/start", { player: S.player, persona: S.current })); }   // 取得完整標示的 state
     catch (e2) { if (!handleErr(e2)) { S.state.ended = true; render(S.state); } }
   } catch (e) {
@@ -860,7 +867,7 @@ function init() {
   consent.onchange = () => { $("btn-enter").disabled = !consent.checked; };
   $("btn-consent-show").onclick = () => { S.showConsent = !S.showConsent; updateConsentUi(); };
   $("btn-delete").onclick = () => confirmBox("刪除我的資料？",
-    "按下確定，會刪除這個玩家在伺服器上的存檔（暱稱、所有對話紀錄與分數）、同意紀錄，以及損毀存檔的隔離備份。刪除後無法復原，這台裝置會換成全新的玩家身分。",
+    "按下確定，會刪除這個玩家在伺服器上的存檔（暱稱、所有對話紀錄、分數、小測驗與成就紀錄）、同意紀錄，以及損毀存檔的隔離備份。刪除後無法復原，這台裝置會換成全新的玩家身分。",
     async () => {
       try {
         await api("/api/profile?player=" + encodeURIComponent(S.player), null, "DELETE");

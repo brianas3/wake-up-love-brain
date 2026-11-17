@@ -557,3 +557,187 @@ button, input, select { font: inherit; color: inherit; }
 
 /* 選項區可捲動提示：底部漸層（不攔截點擊、不遮 focus 外框） */
 .choices::after { content: ""; position: sticky; bottom: -1px; flex: none; height: 14px; margin-top: -14px; pointer-events: none; background: linear-gradient(to bottom, transparent, var(--surface)); }
+
+/* 情境小測驗：沿用主題色、原生表單與既有對話框焦點管理。 */
+.quiz-progress { width: 100%; height: 10px; accent-color: var(--accent); }
+.quiz-situation { padding: 20px; border-left: 4px solid var(--accent); background: var(--surface-2); border-radius: 8px; font-size: 1.1rem; }
+.quiz-options { border: 0; padding: 0; margin: 18px 0; min-width: 0; }
+.quiz-options legend { margin-bottom: 12px; font-weight: 600; }
+.quiz-option { display: flex; gap: 12px; align-items: center; padding: 14px; margin: 8px 0; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
+.quiz-option:has(input:checked) { background: var(--accent-soft); border-color: var(--accent); }
+.quiz-option input { flex: 0 0 auto; accent-color: var(--accent); width: 18px; height: 18px; }
+.quiz-confidence { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 18px 0; }
+.quiz-confidence select { padding: 10px; border: 1px solid var(--field-line); background: var(--surface); border-radius: 8px; }
+.quiz-form > button { width: 100%; }
+.quiz-review { margin: 16px 0; padding: 16px; border: 1px solid var(--line); border-radius: 12px; }
+.quiz-review h4 { margin: 0; }
+.quiz-correct { border-left: 4px solid var(--good); }
+.quiz-wrong { border-left: 4px solid var(--bad); }
+.quiz-insight { color: var(--accent); font-weight: 600; }
+.quiz-score { font-size: 1.6rem; color: var(--heading); }
+
+/* 我的成就：清楚區分完成狀態，保留未解鎖條件的文字對比。 */
+.achievement-overview { display: flex; align-items: center; gap: 18px; padding: 16px 0; }
+.achievement-overview h3, .achievement-overview p { margin: 0 0 6px; }
+.achievement-emblem { display: grid; place-items: center; flex: 0 0 64px; height: 64px; border-radius: 50%; color: var(--accent); background: var(--accent-soft); }
+.achievement-emblem .ic { width: 36px; height: 36px; }
+.achievement-progress { width: 100%; height: 10px; accent-color: var(--accent); }
+.achievement-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
+.achievement-filters [aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.achievement-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.achievement-card { position: relative; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); min-width: 0; }
+.achievement-card.is-unlocked { border-color: var(--accent); background: var(--surface); }
+.achievement-icon { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 12px; background: var(--surface); color: var(--ink-2); border: 1px solid var(--line); border-radius: 14px; }
+.is-unlocked .achievement-icon { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.achievement-icon .ic { width: 26px; height: 26px; }
+.achievement-status { position: absolute; right: 16px; top: 20px; font-size: .8rem; color: var(--ink-2); }
+.is-unlocked .achievement-status { color: var(--accent); font-weight: 700; }
+.achievement-card h4 { margin: 0 0 8px; font-size: 1.05rem; }
+.achievement-card p { margin: 8px 0; overflow-wrap: anywhere; }
+.achievement-group { margin-top: 24px; }
+.achievement-empty { padding: 24px; background: var(--surface-2); border-radius: 12px; }
+@media (min-width: 620px) { .achievement-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } } 
+a.extra {
+  color: inherit;
+  text-decoration: none;
+  transition: background .2s, transform .2s;
+}
+
+a.extra:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ─── 2026-11: 情境小測驗 10 題 / 清醒成就圖鑑 / Facebook 外連 ─── */
+#quiz-modal .sheet, #achievements-modal .sheet { padding: 20px 18px calc(26px + env(safe-area-inset-bottom)); }
+#quiz-modal .sheet-head, #achievements-modal .sheet-head { margin-bottom: 8px; }
+#quiz-modal .sheet-head h2, #achievements-modal .sheet-head h2 { font-weight: 800; letter-spacing: -.04em; }
+#quiz-content, #achievements-content { padding-bottom: 8px; }
+#quiz-modal .sheet > .fine, #achievements-modal .sheet > .fine { text-align: left; font-size: 12px; line-height: 1.65; }
+
+.quiz-stats { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin: 16px 0 20px; }
+.quiz-stat { display: flex; flex-direction: column; gap: 2px; padding: 12px 15px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface-2); }
+.quiz-stat-label { color: var(--ink-2); font-size: 12px; }
+.quiz-stat strong { color: var(--heading); font-size: 21px; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.quiz-eyebrow, .achievement-eyebrow { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .1em; }
+.quiz-intro-hero { position: relative; padding: 24px 18px; overflow: hidden; text-align: center; border: 1px solid var(--line); border-radius: 23px; background: radial-gradient(circle at 90% 0%,var(--accent-soft),transparent 55%), var(--surface-2); }
+.quiz-intro-icon { width: 76px; height: 76px; display: grid; place-items: center; margin: 0 auto 12px; border: 1px solid var(--line); border-radius: 24px; background: var(--surface); color: var(--accent); box-shadow: 0 8px 22px rgba(80,20,40,.06); }
+.quiz-intro-icon .ic { width: 46px; height: 46px; }
+#quiz-modal .quiz-intro-hero h3 { font-size: 22px; line-height: 1.3; margin: 10px 0; color: var(--heading); }
+.quiz-intro-hero p { color: var(--ink-2); line-height: 1.7; font-size: 14px; margin: 0; }
+.quiz-intro-grid { display: grid; gap: 8px; margin: 14px 0 18px; }
+.quiz-intro-point { display: grid; grid-template-columns: 31px 1fr; column-gap: 9px; align-items: center; border: 1px solid var(--line); border-radius: 13px; padding: 9px 12px; background: var(--surface); }
+.quiz-intro-point-icon { grid-row: span 2; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: var(--accent-soft); color: var(--accent); }
+.quiz-intro-point-icon .ic { width: 18px; height: 18px; }
+.quiz-intro-point strong { font-size: 13px; }
+.quiz-intro-point small { font-size: 12px; color: var(--ink-2); }
+.quiz-legacy-note { border: 1px solid var(--line); background: var(--surface-2); padding: 10px 12px; border-radius: 10px; color: var(--ink-2); font-size: 13px; }
+.quiz-wide-button { display: block; width: 100%; padding: 14px 15px; margin: 15px 0 10px; min-height: 50px; font-weight: 800; font-size: 15px; box-shadow: 0 5px 0 color-mix(in srgb,var(--accent) 70%,black); }
+.quiz-wide-button:disabled { box-shadow: none; }
+.quiz-question-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 2px; }
+#quiz-modal .quiz-question-top h3 { font-size: 22px; margin: 0; font-weight: 800; color: var(--ink); }
+.quiz-count { border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; color: var(--accent); background: var(--accent-soft); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.quiz-progress { display: block; height: 9px; width: 100%; margin: 12px 0 20px; border: 0; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
+.quiz-progress::-webkit-progress-bar { background: var(--accent-soft); border-radius: 99px; }
+.quiz-progress::-webkit-progress-value { background: var(--accent); border-radius: 99px; }
+.quiz-progress::-moz-progress-bar { background: var(--accent); border-radius: 99px; }
+.quiz-scene { padding: 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 20px; }
+.quiz-scene-heading { display: flex; gap: 8px; align-items: center; color: var(--ink-2); font-size: 13px; font-weight: 600; }
+.quiz-scene-avatar { display: grid; place-items: center; width: 29px; height: 29px; color: var(--accent); background: var(--accent-soft); border-radius: 50%; }
+.quiz-scene-avatar .ic { width: 19px; height: 19px; }
+.quiz-scene-time { margin-left: auto; color: var(--ink-2); font-weight: 400; font-size: 11px; }
+.quiz-chat-bubble { background: var(--surface); margin: 11px 6px 5px 30px; padding: 16px; border: 1px solid var(--line); border-radius: 16px 16px 16px 4px; box-shadow: 0 6px 14px rgba(55,18,35,.045); font-size: 15px; line-height: 1.75; white-space: pre-line; }
+#quiz-modal .quiz-options { border: 0; padding: 0; margin: 18px 0; }
+#quiz-modal .quiz-options legend, #quiz-modal .quiz-confidence legend { display: block; width: 100%; padding: 0 0 9px; margin: 0; font-size: 14px; font-weight: 800; }
+#quiz-modal .quiz-option { display: flex; position: relative; width: 100%; gap: 12px; align-items: center; padding: 14px; margin: 8px 0; cursor: pointer; border: 1.5px solid var(--line); border-radius: 14px; background: var(--surface); transition: background .15s,border-color .15s,transform .15s; }
+#quiz-modal .quiz-option:hover { border-color: var(--accent); transform: translateY(-1px); }
+#quiz-modal .quiz-option:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+#quiz-modal .quiz-option:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+#quiz-modal .quiz-option input { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
+.quiz-option-letter { display: grid; flex: none; place-items: center; width: 34px; height: 34px; border-radius: 10px; font-size: 15px; font-weight: 800; color: var(--accent); background: var(--accent-soft); }
+.quiz-option:has(input:checked) .quiz-option-letter { background: var(--accent); color: var(--accent-ink); }
+.quiz-option-text { flex: 1; line-height: 1.52; font-size: 14px; }
+#quiz-modal .quiz-confidence { border: 0; padding: 0; margin: 18px 0 4px; }
+.quiz-confidence-row { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 7px; }
+.quiz-confidence-pill { display: block; position: relative; cursor: pointer; }
+.quiz-confidence-pill input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.quiz-confidence-pill span { display: grid; place-items: center; padding: 10px 2px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); color: var(--ink-2); font-size: 12px; font-weight: 700; }
+.quiz-confidence-pill:has(input:checked) span { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.quiz-confidence-pill:focus-within span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.quiz-footnote { text-align: center; color: var(--ink-2); font-size: 12px; margin: 13px 0 3px; }
+.quiz-section-title { margin: 10px 0 !important; color: var(--heading); font-size: 20px !important; }
+#quiz-modal .quiz-review { margin: 12px 0; padding: 15px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); }
+#quiz-modal .quiz-correct { border-left: 4px solid var(--good); }
+#quiz-modal .quiz-wrong { border-left: 4px solid var(--bad); }
+.quiz-review h4 { margin: 0 0 10px; font-size: 14px; }
+.quiz-review-prompt { font-size: 14px; line-height: 1.6; font-weight: 600; }
+.quiz-answer-line { font-size: 13px; line-height: 1.6; margin: 7px 0; }
+.quiz-answer-line.is-correct { color: var(--good); font-weight: 750; }
+.quiz-explanation { padding-top: 10px; border-top: 1px solid var(--line); font-size: 13px; line-height: 1.7; color: var(--ink-2); }
+.quiz-new-achievements { background: var(--accent-soft); color: var(--accent); font-weight: 750; border-radius: 12px; padding: 12px 14px; margin: 12px 0; font-size: 13px; }
+.quiz-finish { padding: 24px 16px; text-align: center; border-radius: 21px; border: 1px solid var(--line); background: radial-gradient(circle at top,var(--accent-soft),transparent 65%),var(--surface-2); }
+.quiz-score-ring { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 145px; height: 145px; margin: 14px auto; border-radius: 50%; background: radial-gradient(closest-side,var(--surface) 82%,transparent 83% 100%),conic-gradient(var(--accent) var(--score),var(--line) 0); }
+.quiz-score-ring strong { font-size: 55px; font-weight: 850; line-height: 1; color: var(--heading); }
+.quiz-score-ring small { font-size: 12px; color: var(--ink-2); }
+#quiz-modal .quiz-finish h3 { font-size: 21px; margin: 10px 0 6px; }
+.quiz-finish p { color: var(--ink-2); font-size: 13px; line-height: 1.65; margin: 0; }
+.quiz-result-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.quiz-result-stat { text-align: center; border: 1px solid var(--line); border-radius: 13px; padding: 12px; background: var(--surface); }
+.quiz-result-stat strong { display: block; color: var(--heading); font-size: 22px; }
+.quiz-result-stat span { display: block; font-size: 12px; color: var(--ink-2); }
+.quiz-accordion { margin: 12px 0; border: 1px solid var(--line); border-radius: 15px; overflow: hidden; padding: 0 12px 10px; }
+.quiz-accordion summary { cursor: pointer; font-weight: 800; padding: 15px 6px; }
+.quiz-history-line { font-size: 13px; padding: 6px 8px; border-bottom: 1px solid var(--line); margin: 0; }
+
+/* 成就收藏室 */
+.achievement-hero { position: relative; display: flex; align-items: center; gap: 10px; justify-content: space-between; background: radial-gradient(circle at 100% 0,var(--accent-soft),transparent 70%),var(--surface-2); border: 1px solid var(--line); border-radius: 20px; padding: 18px 14px 18px 18px; margin: 18px 0 10px; }
+.achievement-heading { min-width: 0; flex: 1; }
+#achievements-modal .achievement-heading h3 { margin: 4px 0 6px; font-size: 21px; color: var(--heading); font-weight: 850; }
+.achievement-heading p { margin: 0; font-size: 12px; line-height: 1.6; color: var(--ink-2); }
+.achievement-gauge { flex: none; width: 103px; height: 103px; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(var(--accent) var(--percent),var(--line) 0); }
+.achievement-gauge-inner { width: 84px; height: 84px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: var(--surface); }
+.achievement-gauge strong { font-size: 29px; line-height: 1.2; color: var(--heading); }
+.achievement-gauge span { font-size: 12px; color: var(--ink-2); }
+.achievement-overview-metrics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; margin: 12px 0; }
+.achievement-metric { text-align: center; border: 1px solid var(--line); border-radius: 13px; padding: 11px 3px; background: var(--surface); }
+.achievement-metric strong { display: block; font-size: 20px; color: var(--heading); }
+.achievement-metric span { display: block; font-size: 11px; color: var(--ink-2); }
+.achievement-next { display: flex; align-items: center; gap: 11px; margin: 14px 0; border-radius: 14px; padding: 12px; background: var(--accent-soft); border: 1px solid var(--line); }
+.achievement-next-icon { width: 38px; height: 38px; display: grid; place-items: center; flex: none; color: var(--accent); border-radius: 12px; background: var(--surface); }
+.achievement-next-icon .ic { width: 23px; height: 23px; }
+.achievement-next > div:last-child { display: flex; flex-direction: column; gap: 2px; }
+.achievement-next strong { font-size: 15px; }
+.achievement-next small { color: var(--ink-2); line-height: 1.45; font-size: 12px; }
+.achievement-filters { display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto; padding: 4px 0 9px; margin: 14px -2px 4px; scrollbar-width: thin; }
+.achievement-filter { flex: none; border: 1px solid var(--line); border-radius: 999px; padding: 9px 13px; background: var(--surface); color: var(--ink-2); font-size: 12px; font-weight: 750; cursor: pointer; }
+.achievement-filter[aria-pressed="true"] { border-color: var(--accent); color: var(--accent-ink); background: var(--accent); }
+.achievement-group-head { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 9px; }
+#achievements-modal .achievement-group-head h3 { font-size: 16px; margin: 0; font-weight: 800; }
+.achievement-group-head > span { color: var(--ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
+.achievement-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.achievement-card { min-width: 0; padding: 13px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); transition: border-color .18s,transform .18s; }
+.achievement-card.is-unlocked { background: var(--surface); border-color: var(--accent); }
+.achievement-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 4px; }
+.achievement-icon { width: 42px; height: 42px; display: grid; place-items: center; margin: 0; flex: none; border-radius: 13px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); }
+.is-unlocked .achievement-icon { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.achievement-icon .ic { width: 25px; height: 25px; }
+.achievement-rarity { font-size: 10px; white-space: nowrap; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 7px; color: var(--ink-2); }
+.achievement-card[data-rarity="稀有"] .achievement-rarity { color: var(--grape); }
+.achievement-card[data-rarity="傳說"] .achievement-rarity { color: var(--accent); font-weight: 800; }
+.achievement-card .achievement-status { display: block; position: static; margin: 10px 0 4px; color: var(--ink-2); font-size: 11px; }
+.achievement-card.is-unlocked .achievement-status { color: var(--accent); font-weight: 800; }
+.achievement-card h4 { font-size: 14px; line-height: 1.35; margin: 4px 0 7px; }
+.achievement-card .achievement-description { font-size: 12px; line-height: 1.55; color: var(--ink-2); margin: 0 0 8px; }
+.achievement-progress-label { display: flex; justify-content: space-between; gap: 8px; color: var(--ink-2); font-size: 11px; margin: 7px 0 5px; }
+.achievement-progress-label strong { font-variant-numeric: tabular-nums; }
+.achievement-progress { display: block; height: 7px; width: 100%; border: 0; border-radius: 99px; background: var(--line); }
+.achievement-progress::-webkit-progress-bar { background: var(--line); border-radius: 99px; }
+.achievement-progress::-webkit-progress-value { background: var(--accent); border-radius: 99px; }
+.achievement-progress::-moz-progress-bar { background: var(--accent); border-radius: 99px; }
+.achievement-card .achievement-unlocked-date { margin: 10px 0 0; font-size: 11px; color: var(--ink-2); }
+.achievement-note { margin-top: 18px; font-size: 12px; line-height: 1.65; color: var(--ink-2); }
+.achievement-refresh { display: block; width: 100%; margin-top: 8px; }
+.achievement-empty, .achievement-finished { border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--surface-2); color: var(--ink-2); font-size: 13px; }
+@media (max-width: 365px) { .achievement-grid { grid-template-columns: 1fr; } .achievement-gauge { width: 85px; height: 85px; } .achievement-gauge-inner { width: 69px; height: 69px; } .achievement-gauge strong { font-size: 24px; } }
+@media (prefers-reduced-motion: reduce) { .quiz-option,.achievement-card { transition: none !important; transform: none !important; } }

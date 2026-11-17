@@ -84,10 +84,10 @@
         <label class="check"><input type="checkbox" id="consent-ok"> <span>我已滿 18 歲，了解以上說明，願意開始。</span></label>
       </section>
       <p id="consent-done" class="fine hidden"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>你已同意使用說明　<button id="btn-consent-show" class="linkbtn">重看說明</button></p>
-      <div class="home-extras" aria-label="更多功能（即將推出）">
-        <button class="extra" data-soon="quiz"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>戀愛腦小測驗<em>即將推出</em></button>
-        <button class="extra" data-soon="club"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span>暈船互助會<em>即將推出</em></button>
-        <button class="extra" data-soon="badges"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-medal"/></svg></span>我的成就<em>即將推出</em></button>
+      <div class="home-extras" aria-label="更多功能">
+        <button class="extra" data-quiz><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>戀愛腦小測驗<em>10 題挑戰</em></button>
+        <a class="extra" href="https://www.facebook.com/groups/1163556496204848/" target="_blank" rel="noopener noreferrer" aria-label="戀愛互助會，前往 Facebook 社團（另開新分頁）"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span>戀愛互助會<em>前往 FB 社團 ↗</em></a>
+        <button class="extra" data-achievements><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-medal"/></svg></span>我的成就<em>探索徽章</em></button>
       </div>
       <button id="btn-delete" class="linkbtn">刪除我的資料</button>
       <p class="fine">本遊戲為教育用模擬，不是心理治療，也不提供投資建議。<br>角色皆為虛構，請勿輸入真實個資。</p>
@@ -120,10 +120,10 @@
         <h3>教練的紀錄</h3>
         <ul id="history-list"></ul>
       </div>
-      <div class="soon-row" aria-label="即將推出">
-        <button class="extra" data-soon="quiz"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>小測驗<em>即將推出</em></button>
-        <button class="extra" data-soon="club"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span>暈船互助會<em>即將推出</em></button>
-        <button class="extra" data-soon="badges"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-medal"/></svg></span>成就<em>即將推出</em></button>
+      <div class="soon-row" aria-label="更多功能">
+        <button class="extra" data-quiz><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>小測驗<em>10 題挑戰</em></button>
+        <a class="extra" href="https://www.facebook.com/groups/1163556496204848/" target="_blank" rel="noopener noreferrer" aria-label="戀愛互助會，前往 Facebook 社團（另開新分頁）"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span>戀愛互助會<em>前往 FB 社團 ↗</em></a>
+        <button class="extra" data-achievements><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-medal"/></svg></span>成就<em>探索徽章</em></button>
       </div>
     </div>
   </section>
@@ -213,10 +213,10 @@
         <button class="icon-btn" data-close aria-label="關閉"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></button>
       </div>
       <div id="review-body"></div>
-      <div class="soon-row" aria-label="即將推出">
-        <button class="extra" data-soon="quiz"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>小測驗<em>即將推出</em></button>
-        <button class="extra" data-soon="club"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span>互助會<em>即將推出</em></button>
-        <button class="extra" data-soon="badges"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-medal"/></svg></span>成就<em>即將推出</em></button>
+      <div class="soon-row" aria-label="更多功能">
+        <button class="extra" data-quiz><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-note"/></svg></span>小測驗<em>10 題挑戰</em></button>
+        <a class="extra" href="https://www.facebook.com/groups/1163556496204848/" target="_blank" rel="noopener noreferrer" aria-label="戀愛互助會，前往 Facebook 社團（另開新分頁）"><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg></span>戀愛互助會<em>前往 FB 社團 ↗</em></a>
+        <button class="extra" data-achievements><span aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-medal"/></svg></span>成就<em>探索徽章</em></button>
       </div>
       <div class="sheet-actions">
         <button class="btn" id="review-again">再玩一次</button>
@@ -290,6 +290,27 @@
     </div>
   </div>
 
+  <div class="modal hidden" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
+    <div class="sheet wide">
+      <div class="sheet-head">
+        <h2 id="quiz-title">戀愛腦小測驗</h2>
+        <button class="icon-btn" data-close aria-label="關閉小測驗">×</button>
+      </div>
+      <div id="quiz-content" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="achievements-modal" role="dialog" aria-modal="true" aria-labelledby="achievements-title">
+    <div class="sheet wide">
+      <div class="sheet-head">
+        <h2 id="achievements-title">我的成就</h2>
+        <button class="icon-btn" data-close aria-label="關閉我的成就">×</button>
+      </div>
+      <p class="fine">記下你練習過的每一步。不用一次完成，也不用追求全滿。</p>
+      <div id="achievements-content" aria-live="polite"></div>
+    </div>
+  </div>
+
   <!-- 即將推出 -->
   <div class="modal hidden" id="soon-modal" role="dialog" aria-modal="true" aria-labelledby="soon-title">
     <div class="sheet">
@@ -315,5 +336,7 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </div>
 <script src="app.js"></script>
+<script src="quiz.js"></script>
+<script src="achievements.js"></script>
 </body>
 </html>
