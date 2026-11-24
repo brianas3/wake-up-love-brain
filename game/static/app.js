@@ -708,10 +708,6 @@ function reviewClick() {
 async function review(finish) {
   try {
     const r = await api("/api/review", { player: S.player, persona: S.current, severity: severity(), ...(finish ? { finish: true } : {}) });
-    if (r.achievements && r.achievements.newly_unlocked.length) {
-      const names = r.achievements.badges.filter(b => r.achievements.newly_unlocked.includes(b.id)).map(b => b.title);
-      toast("解鎖成就：" + names.join("、"));
-    }
     const s = r.scores;
     const newAchievements = (r.achievements && r.achievements.newly_unlocked) || [];
     const body = $("review-body");
